@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .prediction {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+            font-style: italic;
+        }
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        .result-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Performance Prediction</h1>
+    
+    <div class="info-box">
+        <h3>📚 How This Prediction Works</h3>
+        <p>This tool predicts student grade class (A, B, C, D, or F) based on various academic and personal factors.</p>
+    </div>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label>Age:</label>
+            <input type="number" name="age" required min="13" max="20" step="1">
+            <div class="hint">Most students are between 15-18 years old</div>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <select name="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Ethnicity:</label>
+            <select name="ethnicity" required>
+                <option value="Caucasian">Caucasian</option>
+                <option value="Asian">Asian</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Parental Education:</label>
+            <select name="parentalEducation" required>
+                <option value="High School">High School</option>
+                <option value="Some College">Some College</option>
+                <option value="Bachelor's">Bachelor's</option>
+            </select>
+            <div class="hint">Higher parental education often correlates with better academic support</div>
+        </div>
+
+        <div class="form-group">
+            <label>Study Time (hours per week):</label>
+            <input type="number" name="studyTime" required min="0" max="50" step="0.5">
+            <div class="hint">Higher study time typically leads to better performance</div>
+        </div>
+
+        <div class="form-group">
+            <label>Number of Absences:</label>
+            <input type="number" name="absences" required min="0" max="100">
+            <div class="hint">Lower absences strongly correlate with better grades</div>
+        </div>
+
+        <div class="form-group">
+            <label>Tutoring:</label>
+            <select name="tutoring" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <div class="hint">Regular tutoring can help improve understanding</div>
+        </div>
+
+        <div class="form-group">
+            <label>Parental Support:</label>
+            <select name="parentalSupport" required>
+                <option value="Low">Low</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>
+            </select>
+            <div class="hint">Higher parental support often leads to better outcomes</div>
+        </div>
+
+        <div class="form-group">
+            <label>Extracurricular Activities:</label>
+            <select name="extracurricular" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sports Participation:</label>
+            <select name="sports" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Music Participation:</label>
+            <select name="music" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Volunteering:</label>
+            <select name="volunteering" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Current GPA:</label>
+            <input type="number" name="gpa" required min="0" max="4" step="0.01">
+            <div class="hint">Current GPA is a strong predictor of performance</div>
+        </div>
+
+        <button type="submit">Predict Performance</button>
+    </form>
+
+    {% if prediction %}
+    <div class="prediction">
+        <h2>Results:</h2>
+        <div class="result-box">
+            <h3 style="color: #2196F3;">{{ prediction }}</h3>
+            <p>This prediction is based on the patterns found in historical student data. Key factors that strongly influence the prediction include:</p>
+            <ul>
+                <li>Current GPA: Higher GPAs typically indicate better academic performance</li>
+                <li>Study Time: More study hours generally correlate with better grades</li>
+                <li>Absences: Lower absence rates usually lead to better performance</li>
+                <li>Parental Support: Strong support systems often contribute to academic success</li>
+                <li>Tutoring: Regular tutoring can help improve understanding and grades</li>
+            </ul>
+        </div>
+        <p style="font-style: italic; margin-top: 15px;">Note: This prediction is based on historical data and should be used as a general guideline.</p>
+    </div>
+    {% endif %}
+</body>
+</html>
